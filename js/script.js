@@ -45,31 +45,42 @@ nextButton.addEventListener("click", nextSlide);
 
 
 
-//PARTE DE SCRIPT PARA FORMULARIO
+document.addEventListener("DOMContentLoaded", function () {
+    const formulario = document.getElementById("contactoForm");
+    const resultado = document.getElementById("resultado");
 
-const form = document.getElementById("contact-form");
-const message = document.getElementById("message");
+    formulario.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-form.addEventListener("submit", function(event) {
-    event.preventDefault();
+        const nombre = document.getElementById("nombre").value;
+        const email = document.getElementById("email").value;
+        const telefono = document.getElementById("telefono").value;
+        let errores = [];
 
-    const nombre = document.getElementById("nombre").value;
-    const email = document.getElementById("email").value;
-    const telefono = document.getElementById("telefono").value;
+        if (!nombre || nombre.length > 50) {
+            errores.push("El campo Nombre es obligatorio y debe tener un máximo de 50 caracteres.");
+        }
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 100) {
+            errores.push("El campo Email es obligatorio, debe ser una dirección de correo válida y tener un máximo de 100 caracteres.");
+        }
+        if (!telefono || !/^[0-9]{10}$/.test(telefono)) {
+            errores.push("El campo Teléfono es obligatorio y debe contener exactamente 10 dígitos numéricos.");
+        }
 
-    // Validaciones
-    if (nombre.trim() === "" || email.trim() === "" || telefono.trim() === "") {
-        message.innerHTML = "<p>Todos los campos son obligatorios.</p>";
-    } else if (!validateEmail(email)) {
-        message.innerHTML = "<p>El correo electrónico no es válido.</p>";
-    } else {
-        message.innerHTML = `<p>Nombre: ${nombre}</p>
-                              <p>Correo Electrónico: ${email}</p>
-                              <p>Teléfono: ${telefono}</p>`;
-    }
+        if (errores.length === 0) {
+            resultado.innerHTML = ""; // Limpia resultados anteriores
+            const divResultado = document.createElement("div");
+            divResultado.innerHTML = `
+                <p>Nombre: ${nombre}</p>
+                <p>Email: ${email}</p>
+                <p>Teléfono: ${telefono}</p>
+            `;
+            resultado.appendChild(divResultado);
+        } else {
+            resultado.innerHTML = ""; // Limpia resultados anteriores
+            const errorDiv = document.createElement("div");
+            errorDiv.innerHTML = `<p>Hubo errores en el formulario:</p><ul>${errores.map(error => `<li>${error}</li>`).join('')}</ul>`;
+            resultado.appendChild(errorDiv);
+        }
+    });
 });
-
-function validateEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-}

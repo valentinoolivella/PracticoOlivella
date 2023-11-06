@@ -96,3 +96,23 @@ button {
     margin-top: 263px;
     margin-bottom: 0;
 }
+form {
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 400px;
+    background-color: orange;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #ccc;
+}
+
+label, input, textarea {
+    display: block;
+    margin-bottom: 10px;
+    width: 100%;
+}
+#resultado {
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 400px;
+    background-color: orange;
+}

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario</title>
     <link rel="stylesheet" href="../estilos/estilos.css">
+    <script src="../js/script.js"></script>
 </head>
 <body>
     <header>
@@ -30,37 +31,31 @@
     </header>
 
     <main>
+        <h1 class="almedio">Formulario de Contacto</h1>
+        <h3>¿Quieres recibir información sobre próximos entrenamientos?</h3>
+        <p>Llena el siguiente formulario y recibirás información por correo electrónico y WhatsApp. Aranceles, fechas y mucho más. Te esperamos.</p>
 
-    <h1 class="almedio">Formulario de Contacto</h1>
-    <H3>¿Queres recibir informacion sobre proximos entrenamientos?</H3> <br>
-    <P>
-        Llena el siguiente formulario y recibiras info via mail y whatsapp. <br>
-        Arranceles, fechas y mucho más. Te esperamos
-    </P> <br>
-    <form id="contact-form">
-        <div>
+        <form id="contactoForm">
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" required>
-        </div>
-        <div>
-            <label for="email">Correo Electrónico:</label>
+            <br>
+
+            <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
-        </div>
-        <div>
+            <br>
+
             <label for="telefono">Teléfono:</label>
             <input type="tel" id="telefono" name="telefono" pattern="[0-9]{10}" required>
-        </div>
-        <div>
-            <button type="submit">Enviar</button>
-        </div>
-    </form>
-    <div id="message"></div>
-    <script src="script.js"></script>
+            <br>
 
+            <button type="submit">Enviar</button>
+        </form>
+
+        <div id="resultado"></div>
     </main>
+
     <footer class="footerformulario">
         <img class="imagenfooter" src="../imagenes/68d4a77713063760bf77e1600f298da3.jpg" alt="Redes Sociales">
-
     </footer>
 </body>
 </html>
