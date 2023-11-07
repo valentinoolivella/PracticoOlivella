@@ -45,42 +45,60 @@ nextButton.addEventListener("click", nextSlide);
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    const formulario = document.getElementById("contactoForm");
-    const resultado = document.getElementById("resultado");
+function validarFormulario() {
+    let div = document.getElementById("frm");
+    let mail = document.forms["form_contacto"]["mail"].value;
+    let nombre = document.forms["form_contacto"]["nombre"].value;
+    let telefono = document.forms["form_contacto"]["telefono"].value;
+    let tiene_error = false;
 
-    formulario.addEventListener("submit", function (event) {
-        event.preventDefault();
+    let exito = document.getElementById("exito");
 
-        const nombre = document.getElementById("nombre").value;
-        const email = document.getElementById("email").value;
-        const telefono = document.getElementById("telefono").value;
-        let errores = [];
+    if (exito) {
+        exito.remove();
+    }
 
-        if (!nombre || nombre.length > 50) {
-            errores.push("El campo Nombre es obligatorio y debe tener un máximo de 50 caracteres.");
-        }
-        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 100) {
-            errores.push("El campo Email es obligatorio, debe ser una dirección de correo válida y tener un máximo de 100 caracteres.");
-        }
-        if (!telefono || !/^[0-9]{10}$/.test(telefono)) {
-            errores.push("El campo Teléfono es obligatorio y debe contener exactamente 10 dígitos numéricos.");
-        }
+    if (mail == "") {
+        document.getElementById("errorMail").innerHTML = "Ingrese correo";
+        tiene_error = true;
+    } else if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))) {
+        document.getElementById("errorMail").innerHTML = "Mail inválido";
+        tiene_error = true;
+    } else {
+        document.getElementById("errorMail").innerHTML = "";
+    }
 
-        if (errores.length === 0) {
-            resultado.innerHTML = ""; // Limpia resultados anteriores
-            const divResultado = document.createElement("div");
-            divResultado.innerHTML = `
-                <p>Nombre: ${nombre}</p>
-                <p>Email: ${email}</p>
-                <p>Teléfono: ${telefono}</p>
-            `;
-            resultado.appendChild(divResultado);
-        } else {
-            resultado.innerHTML = ""; // Limpia resultados anteriores
-            const errorDiv = document.createElement("div");
-            errorDiv.innerHTML = `<p>Hubo errores en el formulario:</p><ul>${errores.map(error => `<li>${error}</li>`).join('')}</ul>`;
-            resultado.appendChild(errorDiv);
-        }
-    });
-});
+    if (nombre == "") {
+        document.getElementById("errorNombre").innerHTML = "Ingrese nombre";
+        tiene_error = true;
+    } else if (nombre.length > 30) {
+        document.getElementById("errorNombre").innerHTML = "Nombre muy largo";
+        tiene_error = true;
+    } else if (/\d/.test(nombre) || !/^[A-Za-z]+$/.test(nombre)) {
+        document.getElementById("errorNombre").innerHTML = "Nombre invalido. Solo puede contener letras";
+        tiene_error = true;
+    } else {
+        document.getElementById("errorNombre").innerHTML = "";
+    }
+
+    if (telefono == "") {
+        document.getElementById("errorTelefono").innerHTML = "Ingrese telefono";
+        tiene_error = true;
+    } else if (!/^\d{1,10}$/.test(telefono)) {
+        document.getElementById("errorTelefono").innerHTML = "El teléfono debe contener hasta 10 números y no letras";
+        tiene_error = true;
+    }
+     else {
+        document.getElementById("errorTelefono").innerHTML = "";
+    }
+
+    if (!tiene_error) {
+        exito = document.createElement("div");
+        exito.id = "exito";
+        exito.className = "exito";
+        exito.innerHTML = "Gracias por ser parte de nuestra academia , " + nombre + "! Enviaremos la informacion a tus datos de contacto. Ingresaste con el mail: " + mail+ " Ingresaste con el telefono: " + telefono;
+        div.appendChild(exito);
+    }
+
+    return false;
+}
